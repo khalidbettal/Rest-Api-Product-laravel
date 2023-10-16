@@ -21,6 +21,7 @@ public function rules(): array
         'description' => ['nullable'],
         'price' => ['sometimes', 'required'],
         'slug' => ['sometimes', 'required'],
+        'image' => ['nullable'],
     ];
 }
 }

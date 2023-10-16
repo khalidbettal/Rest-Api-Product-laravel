@@ -14,10 +14,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): ProductCollection
     {
         $products = Product::all();
-        return new ProductCollection( $products);
+        return new ProductCollection($products);
     }
 
     /**
@@ -25,25 +25,25 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
-/**
- * Store a newly created resource in storage.
- */
-public function store(StoreProductRequest $request)
-{
-    $data = $request->validated();
-    $product = Product::create($data);
-    return new ProductResource($product);
-}
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreProductRequest $request): ProductResource
+    {
+        $validatedData = $request->validated();
+        $product = Product::create($validatedData);
+        return new ProductResource($product);
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product): ProductResource
     {
-        return new ProductResource( $product);
+        return new ProductResource($product);
     }
 
     /**
@@ -51,27 +51,18 @@ public function store(StoreProductRequest $request)
      */
     public function edit(Product $product)
     {
-        //
+       
     }
 
-/**
- * Update the specified resource in storage.
- *
- * @param  \App\Http\Requests\UpdateProductRequest  $request
- * @param  \App\Models\Product  $product
- * @return \App\Http\Resources\ProductResource
- */
-public function update(UpdateProductRequest $request, Product $product)
-{
-    // Validate the request data
-    $validated = $request->validated();
-    
-    // Update the product with the validated data
-    $product->update($validated);
-    
-    // Return the updated product as a resource
-    return new ProductResource($product);
-}
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateProductRequest $request, Product $product): ProductResource
+    {
+        $validatedData = $request->validated();
+        $product->update($validatedData);
+        return new ProductResource($product);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -82,13 +73,13 @@ public function update(UpdateProductRequest $request, Product $product)
         return response()->noContent();
     }
 
-
-    public function search(Request $request)
+    /**
+     * Search for products based on the provided search term.
+     */
+    public function search(Request $request): ProductCollection
     {
-        $search = $request->search;
-        $products = Product::where('name', 'like', '%' . $search . '%')->get();
-        return new ProductCollection( $products);
+        $searchTerm = $request->search;
+        $products = Product::where('name', 'like', '%' . $searchTerm . '%')->get();
+        return new ProductCollection($products);
     }
-
-    
 }

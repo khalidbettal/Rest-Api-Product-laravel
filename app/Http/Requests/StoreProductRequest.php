@@ -26,6 +26,7 @@ class StoreProductRequest extends FormRequest
             'description' => 'nullable',
             'price' => 'required',
             'slug' => 'required',
+            'image' => 'nullable',
         ];
     }
 }
